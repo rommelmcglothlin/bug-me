@@ -5,21 +5,28 @@ import { BadRequest } from "../errors";
 const _repository = mongoose.model("Note", note);
 
 class NotesService {
-  async getNoteByBugId(bugId) {
-    if (!bugId) {
-      throw new BadRequest("Invalid Note ID");
-    }
-    return await _repository.find({ bugId });
+  async getAllNotes() {
+    return await _repository.find({});
   }
-  async createNote(noteData) {
+
+  async createNewNote(noteData) {
     return await _repository.create(noteData);
   }
-  async updateNote(note) {
-    // TODO DONT FORGET BL
-    return await _repository.findByIdAndUpdate(note.id, note, {
-      new: true,
-      runValidators: true
-    });
+
+  async getNoteByBugId(bugId) {
+    let noteFromBug = await _repository.find({ bug: bugId });
+    if (!noteFromBug) {
+      throw new BadRequest("Invalid Note ID! Please try again");
+    }
+    return noteFromBug;
+  }
+
+  async updateCurrentNote(id, noteData) {
+    return await _repository.findByIdAndUpdate(id, noteData, { new: true });
+  }
+
+  async deleteNote(id) {
+    return await _repository.findByIdAndRemove(id);
   }
 }
 

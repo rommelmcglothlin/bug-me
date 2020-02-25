@@ -5,12 +5,13 @@ export class NotesController {
   constructor() {
     this.router = express
       .Router()
-      .get("", this.getNotes)
-      .post("", this.create)
-      .put("/:id", this.update);
+      .get("", this.getAllNotes)
+      .post("", this.createNewNote)
+      .put("/:id", this.editCurrentNote)
+      .delete("/:id", this.deleteCurrentNote);
   }
 
-  async getNotes(req, res, next) {
+  async getAllNotes(req, res, next) {
     try {
       let notes = await notesService.getNoteByBugId(req.query.bugId);
       res.send(notes);
@@ -18,20 +19,30 @@ export class NotesController {
       next(e);
     }
   }
-  async create(req, res, next) {
+
+  async createNewNote(req, res, next) {
     try {
-      let note = await notesService.createNote(req.body);
-      res.send(note);
-    } catch (error) {
-      next(error);
+      let newNote = await notesService.createNewNote(req.body);
+      res.send(newNote);
+    } catch (e) {
+      next(e);
     }
   }
-  async update(req, res, next) {
+  async editCurrentNote(req, res, next) {
     try {
-      let contact = await notesService.updateNote(req.body);
-      res.send(contact);
-    } catch (error) {
-      next(error);
+      let editNote = await notesService.updateCurrentNote(req.body);
+      res.send(editNote);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async deleteCurrentNote(req, res, next) {
+    try {
+      await notesService.deleteNote(req.params.id);
+      res.send("Deleted");
+    } catch (e) {
+      next(e);
     }
   }
 }

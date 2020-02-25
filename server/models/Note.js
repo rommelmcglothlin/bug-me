@@ -4,9 +4,9 @@ let ObjectId = Schema.Types.ObjectId;
 
 let note = new Schema(
   {
-    content: String,
-    bugId: { type: ObjectId, ref: "Bug", required: true },
-    reportedBy: String //The provided name for who made the note
+    content: { type: String, maxlength: 10000, required: true },
+    bugId: { type: ObjectId, ref: "Bug" },
+    reportedBy: { type: String, required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 );
