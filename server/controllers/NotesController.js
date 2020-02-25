@@ -13,7 +13,7 @@ export class NotesController {
 
   async getAllNotes(req, res, next) {
     try {
-      let notes = await notesService.getNoteByBugId(req.query.bugId);
+      let notes = await notesService.getNoteByBugId(req.query.id);
       res.send(notes);
     } catch (e) {
       next(e);

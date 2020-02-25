@@ -21,8 +21,8 @@ export default class BugsController {
     try {
       let data = await bugsService.getBugs(req.query);
       return res.send(data);
-    } catch (error) {
-      next(error);
+    } catch (e) {
+      next(e);
     }
   }
 
@@ -46,6 +46,7 @@ export default class BugsController {
     }
   }
 
+  // Create a new bug
   async createNewbug(req, res, next) {
     try {
       let newBug = await bugsService.createBug(req.body);
@@ -54,15 +55,18 @@ export default class BugsController {
       next(e);
     }
   }
+
+  // Edit an active bug
   async editBugInfo(req, res, next) {
     try {
       let editedBug = await bugsService.updateBugInfo(req.params.id, req.body);
       return res.send(editedBug);
-    } catch (error) {
-      next(error);
+    } catch (e) {
+      next(e);
     }
   }
 
+  // Edit an active bug's note
   async editNoteInfo(req, res, next) {
     try {
       if (await bugsService.openBugLookup(req.params.id)) {
@@ -72,11 +76,12 @@ export default class BugsController {
         );
         return res.send(updatedNote);
       }
-    } catch (error) {
-      next(error);
+    } catch (e) {
+      next(e);
     }
   }
 
+  // Close a bug so is no longer active
   async closeBug(req, res, next) {
     try {
       await bugsService.closeBugById(req.params.id);

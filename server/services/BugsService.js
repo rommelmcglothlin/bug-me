@@ -45,7 +45,7 @@ class BugsService {
     // @ts-ignore
     if (!bugToDelete.closed) {
       // @ts-ignore
-      bugtoDelete.closed = true;
+      bugToDelete.closed = true;
       return await _repository.findByIdAndUpdate(id, bugToDelete, {
         new: true
       });
