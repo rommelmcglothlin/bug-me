@@ -7,7 +7,6 @@ export class NotesController {
       .Router()
       .get("", this.getAllNotes)
       .post("", this.createNewNote)
-      .put("/:id", this.editCurrentNote)
       .delete("/:id", this.deleteCurrentNote);
   }
 
@@ -24,14 +23,6 @@ export class NotesController {
     try {
       let newNote = await notesService.createNote(req.body);
       res.send(newNote);
-    } catch (e) {
-      next(e);
-    }
-  }
-  async editCurrentNote(req, res, next) {
-    try {
-      let editNote = await notesService.updateCurrentNote(req.body);
-      res.send(editNote);
     } catch (e) {
       next(e);
     }

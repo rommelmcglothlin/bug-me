@@ -12,7 +12,6 @@ export default class BugsController {
       .get("/:id/notes", this.getNoteByBugId)
       .post("", this.createNewBug)
       .put("/:id", this.editBugInfo)
-      .put("/:id/notes/:id", this.editNoteInfo)
       .delete("/:id", this.closeBug);
   }
 
@@ -61,21 +60,6 @@ export default class BugsController {
     try {
       let editedBug = await bugsService.updateBugInfo(req.params.id, req.body);
       return res.send(editedBug);
-    } catch (e) {
-      next(e);
-    }
-  }
-
-  // Edit an active bug's note
-  async editNoteInfo(req, res, next) {
-    try {
-      if (await bugsService.openBugLookup(req.params.id)) {
-        let updatedNote = await notesService.updateCurrentNote(
-          req.parms.notes,
-          req.body
-        );
-        return res.send(updatedNote);
-      }
     } catch (e) {
       next(e);
     }

@@ -5,10 +5,6 @@ import { BadRequest } from "../errors";
 const _repository = mongoose.model("Note", note);
 
 class NotesService {
-  async getAllNotes() {
-    return await _repository.find({});
-  }
-
   async createNote(noteData) {
     return await _repository.create(noteData);
   }
@@ -19,10 +15,6 @@ class NotesService {
       throw new BadRequest("Invalid Note ID! Please try again");
     }
     return noteFromBug;
-  }
-
-  async updateCurrentNote(id, noteData) {
-    return await _repository.findByIdAndUpdate(id, noteData, { new: true });
   }
 
   async deleteNote(id) {
