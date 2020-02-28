@@ -9,7 +9,7 @@ class NotesService {
     return await _repository.find({});
   }
 
-  async createNewNote(noteData) {
+  async createNote(noteData) {
     return await _repository.create(noteData);
   }
 

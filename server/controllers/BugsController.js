@@ -10,7 +10,7 @@ export default class BugsController {
       .get("", this.getAllBugs)
       .get("/:id", this.getBugById)
       .get("/:id/notes", this.getNoteByBugId)
-      .post("", this.createNewbug)
+      .post("", this.createNewBug)
       .put("/:id", this.editBugInfo)
       .put("/:id/notes/:id", this.editNoteInfo)
       .delete("/:id", this.closeBug);
@@ -47,7 +47,7 @@ export default class BugsController {
   }
 
   // Create a new bug
-  async createNewbug(req, res, next) {
+  async createNewBug(req, res, next) {
     try {
       let newBug = await bugsService.createBug(req.body);
       res.send(newBug);

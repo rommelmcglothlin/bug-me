@@ -22,7 +22,7 @@ export class NotesController {
 
   async createNewNote(req, res, next) {
     try {
-      let newNote = await notesService.createNewNote(req.body);
+      let newNote = await notesService.createNote(req.body);
       res.send(newNote);
     } catch (e) {
       next(e);
