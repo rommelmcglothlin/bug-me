@@ -58,7 +58,7 @@ export default class BugsController {
   // Edit an active bug
   async editBugInfo(req, res, next) {
     try {
-      let editedBug = await bugsService.updateBugInfo(req.params.id, req.body);
+      let editedBug = await bugsService.updateBug(req.params.id, req.body);
       return res.send(editedBug);
     } catch (e) {
       next(e);
@@ -69,7 +69,7 @@ export default class BugsController {
   async closeBug(req, res, next) {
     try {
       await bugsService.closeBugById(req.params.id);
-      res.send("Deleted");
+      res.send("Bug has been Deleted");
     } catch (e) {
       next(e);
     }

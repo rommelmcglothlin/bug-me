@@ -21,23 +21,17 @@ class BugsService {
     return bug;
   }
 
-  async updateBugInfo(id, updateData) {
-    let currentBug = await this.getBugById(id);
+  async updateBug(id, updateData) {
+    let bug = _repository.findById(id, updateData);
     // @ts-ignore
-    if (!currentBug.closed) {
-      return await _repository.findByIdAndUpdate(id, updateData, { new: true });
-    }
-  }
-
-  async openBugLookup(id) {
-    let openBug = await this.getBugById(id);
-    // @ts-ignore
-    if (!openBug.closed) {
+    if (bug.closed) {
       throw new BadRequest(
         "Unfotunately the bug you're looking for has been deleted or is no longer available."
       );
     }
-    return true;
+    return await _repository.findByIdAndUpdate(id, bug, {
+      new: true
+    });
   }
 
   async closeBugById(id) {
